@@ -29,8 +29,10 @@ def test_lang_button_and_second_get_drives() -> None:
     exe = _exe()
     with Session.launch(
         exe,
-        backends=("playwright",),
+        backends=("playwright", "pywinauto"),
         user_data_marker="QuickDiskBench_WVData2",
+        window_class="QuickDiskBenchNativeWebView2Class",
+        window_title_re="Native Storage Benchmark",
         webmessage_wire="object",
         heartbeat={"action": "get_drives"},
         heartbeat_expect_type="drives",
@@ -46,3 +48,7 @@ def test_lang_button_and_second_get_drives() -> None:
             timeout_s=10,
         )
         assert message.get("type") == "drives"
+        assert session.pywinauto is not None
+        assert session.pywinauto.title_matches("Native Storage Benchmark")
+        html_title = session.playwright.page.title()
+        assert "Native Storage Benchmark" not in html_title

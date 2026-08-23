@@ -4,7 +4,7 @@ app:
   window_class: QuickDiskBenchNativeWebView2Class
   user_data_marker: QuickDiskBench_WVData2
   title_re: "QuickDiskBench"
-  backends: [playwright]
+  backends: [playwright, pywinauto]
   requires_elevation: false
   extra_args: []
   webmessage:
@@ -76,3 +76,9 @@ checks:
     steps:
       - post_message: {action: get_drives}
       - wait_message: {type: drives, since: last, timeout_s: 10}
+
+  - id: native.window_title
+    category: native
+    via: pywinauto
+    desc: "Win32 タイトル（HTML title より長い Native Storage Benchmark 側）"
+    title_re: "Native Storage Benchmark"

@@ -39,4 +39,4 @@ QuickFolderSize の `requireAdministrator` は残します。そのライブ検�
 
 ## 5. 実装状況
 
-PR2 で Playwright の `Session.launch`（CDP、フック、heartbeat cursor、user-data 付き掃除）が入ります。pywinauto / Appium / YAML ランナーは後続です。バンドル済み DiskBench EXE に対する `backends=("playwright",)` がライブ smoke です。
+PR2 は Playwright attach。PR3 は DiskBench の Win32 タイトル（`Native Storage Benchmark`。HTML `<title>` より長い）を pywinauto で見る。Appium と YAML ランナーは後続。QuickImageView は v1 対象外。

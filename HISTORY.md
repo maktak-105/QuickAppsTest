@@ -17,3 +17,4 @@ This file records the major changes in each public version.
 - Repository skeleton, MIT license, bilingual documents, and a `Session` facade that does not attach yet (`pip install -e .` imports `quickappstest.Session`).
 - Playwright CDP backend, WebMessage hook (string and object), history-cursor waits, scoped WebView2 cleanup, and a QuickDiskBench example spec. `#btn-start` is never clicked.
 - v1 live target is QuickDiskBench only. QuickImageView is out of scope.
+- pywinauto attach for DiskBench Win32 title (`Native Storage Benchmark`), distinct from HTML `<title>`.

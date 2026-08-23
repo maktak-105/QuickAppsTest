@@ -10,7 +10,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 from . import cleanup
 from .adapters.webmessage import as_payload, type_equals
-from .backends import playwright_backend
+from .backends import playwright_backend, pywinauto_backend
 from .errors import BackendUnavailable, LaunchError
 from .protocol import wait_for_new
 
@@ -63,7 +63,6 @@ class Session:
         retries: int = 3,
         ready_locator: str | None = None,
     ) -> Session:
-        del window_class, window_title_re
         exe_path = Path(exe)
         if not exe_path.is_file():
             raise LaunchError(f"exe not found: {exe_path}")
@@ -79,6 +78,8 @@ class Session:
                     exe_path=exe_path,
                     backends=backends,
                     user_data_marker=user_data_marker,
+                    window_class=window_class,
+                    window_title_re=window_title_re,
                     cdp_port=cdp_port,
                     extra_args=list(extra_args or []),
                     env=dict(env or {}),
@@ -102,6 +103,8 @@ class Session:
         exe_path: Path,
         backends: Sequence[str],
         user_data_marker: str | None,
+        window_class: str | None,
+        window_title_re: str | None,
         cdp_port: int | None,
         extra_args: list[str],
         env: dict[str, str],
@@ -154,7 +157,16 @@ class Session:
                 self.wait_message(predicate, since=cursor, timeout_s=max(3.0, hook_timeout_s))
 
         if "pywinauto" in backends:
-            self.pywinauto = None
+            if self.proc is None or self.proc.pid is None:
+                raise LaunchError("pywinauto attach needs a running process")
+            self.pywinauto = pywinauto_backend.attach(
+                pid=self.proc.pid,
+                window_class=window_class or "",
+            )
+            if window_title_re and not self.pywinauto.title_matches(window_title_re):
+                raise LaunchError(
+                    f"Win32 title {self.pywinauto.window_text()!r} does not match {window_title_re!r}"
+                )
         if "appium" in backends:
             self.appium = None
 
