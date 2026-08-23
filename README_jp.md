@@ -10,7 +10,13 @@ QuickImageView は別途開発中のため、このリポジトリの対象か�
 
 ## 状態
 
-Playwright の attach は入りました。YAML ランナー、pywinauto、Appium は後続 PR です。単体テストに Quick EXE は不要です。
+spec の実行（ビルド済み EXE と隣の `index.html` が必要）:
+
+```powershell
+python -m quickappstest --spec examples/QuickDiskBench/spec.yaml --exe F:\project\QuickDiskBench\dist\binary\QuickDiskBench.exe --report-dir qa_reports
+```
+
+単体テストに Quick EXE は不要です。
 
 ```powershell
 python -m pytest tests -m "not live"

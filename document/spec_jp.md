@@ -39,4 +39,4 @@ QuickFolderSize の `requireAdministrator` は残します。そのライブ検�
 
 ## 5. 実装状況
 
-PR2 は Playwright attach。PR3 は DiskBench の Win32 タイトルを pywinauto で見る。PR4 は HWND 経由の任意 Appium（4723 が閉じなら SKIP）。YAML ランナーは後続。QuickImageView は v1 対象外。
+Playwright、pywinauto、任意 Appium、YAML CLI まで入りました。`python -m quickappstest --spec ... --exe ...` で DiskBench を回します。4723 が閉じなら Appium 項目は SKIP。QuickImageView は v1 対象外。

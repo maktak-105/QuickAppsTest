@@ -19,3 +19,4 @@ This file records the major changes in each public version.
 - v1 live target is QuickDiskBench only. QuickImageView is out of scope.
 - pywinauto attach for DiskBench Win32 title (`Native Storage Benchmark`), distinct from HTML `<title>`.
 - Optional Appium attach by HWND. Closed port 4723 skips; Playwright/pywinauto still pass.
+- YAML runner and `python -m quickappstest` CLI (`--spec` `--exe` `--report-dir`).

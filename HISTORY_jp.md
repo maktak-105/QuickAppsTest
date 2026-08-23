@@ -19,3 +19,4 @@
 - v1 ライブ対象は DiskBench のみ。QuickImageView は対象外
 - DiskBench の Win32 タイトル（`Native Storage Benchmark`）を pywinauto で確認。HTML `<title>` とは別文字列
 - Appium は任意。4723 が閉じているときは SKIP。Playwright / pywinauto は通る
+- YAML ランナーと `python -m quickappstest` CLI（`--spec` `--exe` `--report-dir`）

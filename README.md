@@ -10,7 +10,13 @@ QuickImageView is out of scope for this repository while it is being developed e
 
 ## Status
 
-Playwright attach is implemented. YAML runner, pywinauto, and Appium come in later PRs. Unit tests do not need a Quick EXE:
+Run a spec (needs a built EXE + bundled `index.html`):
+
+```powershell
+python -m quickappstest --spec examples/QuickDiskBench/spec.yaml --exe F:\project\QuickDiskBench\dist\binary\QuickDiskBench.exe --report-dir qa_reports
+```
+
+Unit tests do not need a Quick EXE:
 
 ```powershell
 python -m pytest tests -m "not live"
