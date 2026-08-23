@@ -25,3 +25,4 @@ CODEX_PROJECT_NOTE.txt
 *.WebView2/
 reports/
 qa_reports/
+qa_reports*/

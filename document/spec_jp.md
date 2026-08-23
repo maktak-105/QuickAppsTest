@@ -18,6 +18,7 @@
 | --- | --- | --- |
 | QuickDiskBench | Playwright | バンドル済み `index.html`。`#btn-start` は押さない。ハートビート `{action: get_drives}`。 |
 | QuickFolderSize | Playwright | バンドル済み `index.html`。**検査を管理者で起動。** ハートビート `{cmd: get_drives}`。ネイティブフォルダダイアログは開かない。 |
+| Quick7Zip | Playwright | HTML 埋め込み。ハートビート `{type: initialize}`。開始と参照は押さない。 |
 | QuickImageView | — | 対象外（別途開発中）。 |
 
 QuickFolderSize の `requireAdministrator` は残します。そのライブ検査は、すでに管理者の検査プロセスから起動します。既存 WebMessage キーは改名しません。spec が今の payload を送ります。
