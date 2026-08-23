@@ -13,6 +13,13 @@ from ..errors import BridgeTimeout, LaunchError
 from ..protocol import HISTORY_LEN_JS, INSTALL_HOOK_JS, compact_dumps
 
 
+def wrap_eval_js(script: str) -> str:
+    src = script.strip()
+    if src.startswith("return "):
+        return f"() => {{ {src} }}"
+    return src
+
+
 def find_free_port(start: int = 9222, max_port: int = 65535) -> int:
     for port in range(start, max_port + 1):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
@@ -90,7 +97,7 @@ class PlaywrightBackend:
         )
 
     def eval_js(self, script: str) -> Any:
-        return self.page.evaluate(script)
+        return self.page.evaluate(wrap_eval_js(script))
 
     def close(self) -> None:
         try:

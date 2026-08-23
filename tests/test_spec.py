@@ -31,6 +31,14 @@ def test_infer_via() -> None:
     assert infer_via({"id": "c", "accessibility_name": "QuickDiskBench"}) == "appium"
 
 
+def test_eval_js_wraps_return_statement() -> None:
+    from quickappstest.backends.playwright_backend import wrap_eval_js
+
+    src = "return document.querySelector('#btn-start [data-i18n=btn_start]').textContent"
+    assert wrap_eval_js(src).startswith("() => {")
+    assert wrap_eval_js("1 + 1") == "1 + 1"
+
+
 def test_bad_version(tmp_path: Path) -> None:
     path = tmp_path / "bad.yaml"
     path.write_text("version: 2\napp: {name: X}\nchecks: [{id: a, locator: '#x'}]\n", encoding="utf-8")

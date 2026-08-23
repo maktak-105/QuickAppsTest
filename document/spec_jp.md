@@ -33,9 +33,17 @@ QuickFolderSize の `requireAdministrator` は残します。そのライブ検�
 
 ## 4. アプリ契約（既存）
 
-`quick-app-template/10_検査容易性ルール.md` と `plans/2026-08-23_初期実装_v1.0.md` を正とします。
+正は `quick-app-template/10_検査容易性ルール.md`。検査のために既存キーは改名しません。
 
-新規 Quick アプリは `{type: ...}` オブジェクトです。既存は `action` / `cmd` / `type` / `command` / 文字列 `type` のままです。
+| アプリ | wire | ハートビート send | 応答 |
+| --- | --- | --- | --- |
+| QuickDiskBench | object | `{action: get_drives}` | `type: drives` |
+| QuickFolderSize | object | `{cmd: get_drives}` | `type: drives` |
+| Quick7Zip | object | `{type: initialize}` | `initialized` |
+| QuickFileCopy | object | `{version:1, command: getState}` | `event: selection` |
+| QuickMarkPDF | **string** | `{type: get_state}` | `document_state` |
+
+MarkPDF の string `postMessage` を object ホストへコピーしない（沈黙 no-op）。新規アプリだけ `{type: ...}` オブジェクト。FolderSize の UAC は残し、検査ランナーを昇格する。ネイティブファイルダイアログは完走しない。
 
 ## 5. 実装状況
 

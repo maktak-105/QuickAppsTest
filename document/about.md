@@ -4,18 +4,18 @@
 
 ## Version
 
-v1.0.0 (skeleton)
+v1.0.0
 
 ## Concept
 
-A reusable Python library that inspects Quick-series desktop apps. It is not a shipped Windows GUI.
+A reusable Python library that inspects Quick-series desktop apps. It is not a shipped Windows GUI. v1 live target is QuickDiskBench.
 
 ## Development environment
 
 - Python 3.11+
-- Playwright (WebView2 via `connect_over_cdp`; later PR)
-- pywinauto (native Win32; later PR)
-- Appium 2 Windows driver (optional accessibility; later PR)
+- Playwright (WebView2 via `connect_over_cdp`)
+- pywinauto (DiskBench Win32 title)
+- Appium 2 Windows driver (optional; skip if port 4723 is closed)
 
 No MinGW, WebView2 SDK, or `bundle_html.py` in this repository.
 

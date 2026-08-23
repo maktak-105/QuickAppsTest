@@ -19,7 +19,7 @@ python -m quickappstest --spec examples/QuickDiskBench/spec.yaml --exe F:\projec
 Unit tests do not need a Quick EXE:
 
 ```powershell
-python -m pytest tests -m "not live"
+python run_tests.py
 ```
 
 ## Install from source

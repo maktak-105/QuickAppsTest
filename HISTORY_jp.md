@@ -20,3 +20,5 @@
 - DiskBench の Win32 タイトル（`Native Storage Benchmark`）を pywinauto で確認。HTML `<title>` とは別文字列
 - Appium は任意。4723 が閉じているときは SKIP。Playwright / pywinauto は通る
 - YAML ランナーと `python -m quickappstest` CLI（`--spec` `--exe` `--report-dir`）
+- `run_tests.py` と GitHub Actions CI（windows-latest で `pytest -m "not live"`）
+- YAML の `eval_js` が `return` で始まる場合に Playwright 向けへ包む。ライブ DiskBench spec は 7 pass、Appium は SKIP
