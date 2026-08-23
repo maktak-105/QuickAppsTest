@@ -8,6 +8,7 @@ from quickappstest.spec import infer_via, load_spec
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = ROOT / "examples" / "QuickDiskBench" / "spec.yaml"
 FOLDERSIZE_SPEC = ROOT / "examples" / "QuickFolderSize" / "spec.yaml"
+SEVENZIP_SPEC = ROOT / "examples" / "Quick7Zip" / "spec.yaml"
 
 
 def test_load_diskbench_spec() -> None:
@@ -36,6 +37,17 @@ def test_load_foldersize_spec() -> None:
     by_id = {c.id: c for c in spec.checks}
     assert by_id["structural.scan_button"].via == "playwright"
     assert by_id["protocol.get_drives"].steps[0]["post_message"] == {"cmd": "get_drives"}
+
+
+def test_load_7zip_spec() -> None:
+    spec = load_spec(SEVENZIP_SPEC)
+    assert spec.app.name == "Quick7Zip"
+    assert spec.app.ready_locator == "#languageButton"
+    assert spec.app.heartbeat is not None
+    assert spec.app.heartbeat.post == {"type": "initialize"}
+    assert spec.app.heartbeat.expect_type == "initialized"
+    by_id = {c.id: c for c in spec.checks}
+    assert by_id["structural.start_button_disabled"].expect[0]["enabled"] is False
 
 
 def test_infer_via() -> None:

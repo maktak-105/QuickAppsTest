@@ -8,6 +8,7 @@ Live specs in this repo:
 
 - QuickDiskBench (no elevation)
 - QuickFolderSize (`requireAdministrator` stays; run the tester elevated)
+- Quick7Zip (embedded HTML; do not start compression)
 
 QuickImageView is out of scope while it is developed elsewhere. Appium is optional. Existing WebMessage keys are left as-is.
 
@@ -41,6 +42,7 @@ v1 specs live only in this repository:
 
 - `examples/QuickDiskBench/spec.yaml`
 - `examples/QuickFolderSize/spec.yaml`
+- `examples/Quick7Zip/spec.yaml`
 
 Do not add `examples/QuickImageView/`. Do not copy specs into app repos during v1.
 

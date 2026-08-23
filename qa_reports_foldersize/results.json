@@ -1,0 +1,14 @@
+{
+  "app": "QuickFolderSize",
+  "exe": "F:\\project\\QuickFolderSize\\dist\\binary\\QuickFolderSize.exe",
+  "exit_code": 2,
+  "summary": "launch failed  pass=0 fail=1 skip=0",
+  "checks": [
+    {
+      "id": "launch",
+      "via": "session",
+      "status": "fail",
+      "detail": "requires_elevation: re-run the test process as Administrator"
+    }
+  ]
+}

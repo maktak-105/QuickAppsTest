@@ -23,3 +23,4 @@ This file records the major changes in each public version.
 - `run_tests.py` and GitHub Actions CI (`pytest -m "not live"` on windows-latest).
 - Wrap YAML `eval_js` that starts with `return` so Playwright accepts it. Live DiskBench spec: 7 pass, Appium skip.
 - QuickFolderSize example spec (`cmd` heartbeat, `requires_elevation`). No native dialog, no `C:\` scan.
+- Quick7Zip example spec (`type: initialize`, `#languageButton`). No compression start, no browse dialogs.

@@ -43,6 +43,7 @@ class AppSpec:
     heartbeat: HeartbeatSpec | None = None
     attach_grace_s: float = 2.5
     hook_timeout_s: float = 15.0
+    ready_locator: str | None = None
 
 
 @dataclass
@@ -164,6 +165,7 @@ def load_spec(path: str | Path) -> Spec:
         heartbeat=heartbeat,
         attach_grace_s=float(app_raw.get("attach_grace_s") or 2.5),
         hook_timeout_s=float(app_raw.get("hook_timeout_s") or 15),
+        ready_locator=app_raw.get("ready_locator"),
     )
 
     checks: list[CheckSpec] = []

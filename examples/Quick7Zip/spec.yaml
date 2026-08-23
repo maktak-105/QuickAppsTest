@@ -1,0 +1,82 @@
+version: 1
+app:
+  name: Quick7Zip
+  window_class: Quick7ZipWindow
+  user_data_marker: Quick7Zip\\WebView2
+  title_re: "Quick7Zip"
+  ready_locator: "#languageButton"
+  backends: [playwright, pywinauto, appium]
+  requires_elevation: false
+  extra_args: []
+  webmessage:
+    wire: object
+    request_key: type
+  heartbeat:
+    via: playwright
+    post: {type: initialize}
+    expect_type: initialized
+    timeout_s: 15
+
+# HTML is embedded (RCDATA). No sidecar index.html required.
+# Do not click #startButton (compression) or #browseInput / #browseOutput (native dialogs).
+# AreDevToolsEnabled(FALSE) is a user-facing setting; CDP via env is unproven here.
+
+checks:
+  - id: structural.language_button
+    category: structural
+    via: playwright
+    desc: "#languageButton が存在する"
+    locator: "#languageButton"
+    expect: {exists: true}
+
+  - id: structural.start_button_disabled
+    category: structural
+    via: playwright
+    desc: "#startButton は存在するが初期は無効（押さない）"
+    locator: "#startButton"
+    expect: {exists: true, enabled: false}
+
+  - id: structural.input_path
+    category: structural
+    via: playwright
+    desc: "#inputPath が存在する"
+    locator: "#inputPath"
+    expect: {exists: true}
+
+  - id: i18n.toggle_start_label
+    category: i18n
+    via: playwright
+    desc: "言語トグルで start が 圧縮を開始 ↔ Start compression に入れ替わる"
+    steps:
+      - eval_js: "return document.querySelector('#startButton [data-i18n=start]').textContent"
+        save_as: before
+      - click: "#languageButton"
+      - sleep: 1.0
+      - eval_js: "return document.querySelector('#startButton [data-i18n=start]').textContent"
+        save_as: after
+    expect:
+      - ne: [before, after]
+      - in: [after, ["圧縮を開始", "Start compression"]]
+    teardown:
+      - click: "#languageButton"
+      - sleep: 1.0
+
+  - id: protocol.initialize
+    category: protocol
+    via: playwright
+    desc: "二発目の initialize が history に新しい type=initialized を足す"
+    steps:
+      - post_message: {type: initialize}
+      - wait_message: {type: initialized, since: last, timeout_s: 10}
+
+  - id: native.window_title
+    category: native
+    via: pywinauto
+    desc: "Win32 タイトルが Quick7Zip"
+    title_re: "Quick7Zip"
+
+  - id: ax.window_name
+    category: structural
+    via: appium
+    desc: "AX Name が Quick7Zip を含む。サーバ無ければ SKIP"
+    accessibility_name: "Quick7Zip"

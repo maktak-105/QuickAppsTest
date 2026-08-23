@@ -8,6 +8,7 @@ Quick シリーズ向けの共有 UI / 挙動テストライブラリです。�
 
 - QuickDiskBench（昇格不要）
 - QuickFolderSize（`requireAdministrator` は残す。検査プロセスを管理者で起動）
+- Quick7Zip（HTML 埋め込み。圧縮開始は押さない）
 
 QuickImageView は別途開発中のため対象外です。Appium は任意です。既存キーは改名しません。
 
@@ -41,6 +42,7 @@ v1 の spec はこのリポジトリだけに置きます。
 
 - `examples/QuickDiskBench/spec.yaml`
 - `examples/QuickFolderSize/spec.yaml`
+- `examples/Quick7Zip/spec.yaml`
 
 `examples/QuickImageView/` は作りません。アプリ repo へもコピーしません。
 
