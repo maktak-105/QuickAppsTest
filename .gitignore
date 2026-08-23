@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/*.whl
+dist/*.tar.gz
+.venv/
+venv/
+env/
+.env
+.pytest_cache/
+.mypy_cache/
+
+# Logs and editor
+*.log
+*.dat
+.vscode/
+.idea/
+CODEX_PROJECT_NOTE.txt
+
+# Local WebView2 / test artifacts
+*.WebView2/
+reports/
