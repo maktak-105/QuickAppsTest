@@ -16,3 +16,4 @@
 
 - リポジトリ skeleton、MIT、日英文書、まだ接続しない `Session` facade（`pip install -e .` で `quickappstest.Session` を import できる）
 - Playwright CDP バックエンド、WebMessage フック（string / object）、history cursor 待ち、user-data 付き WebView2 掃除、QuickDiskBench の example spec。`#btn-start` は押さない
+- v1 ライブ対象は DiskBench のみ。QuickImageView は対象外

@@ -4,12 +4,9 @@
 
 Shared UI and behavior test library for Quick-series Windows apps. It is a Python package, not a shipping GUI EXE.
 
-v1 drives two live targets:
+v1 live target is **QuickDiskBench only** (WebView2 HTML via Playwright CDP).
 
-- QuickDiskBench (WebView2 HTML via Playwright CDP)
-- QuickImageView (native Win32 via pywinauto)
-
-Appium is optional. Existing WebMessage keys are left as-is; each spec sends that app's current payload. QuickFolderSize keeps `requireAdministrator`; live runs of that app must start from an already elevated test process.
+QuickImageView is out of scope for this repository while it is being developed elsewhere. Appium is optional. Existing WebMessage keys are left as-is. QuickFolderSize keeps `requireAdministrator`; live runs of that app must start from an already elevated test process.
 
 ## Status
 
@@ -33,10 +30,9 @@ from quickappstest import Session
 
 v1 specs live only in this repository:
 
-- `examples/QuickDiskBench/spec.yaml` (added in a later PR)
-- `examples/QuickImageView/spec.yaml` (added in a later PR)
+- `examples/QuickDiskBench/spec.yaml`
 
-Do not copy them into app repos during v1.
+Do not add `examples/QuickImageView/` in v1. Do not copy specs into app repos during v1.
 
 ## Documentation
 
