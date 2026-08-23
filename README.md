@@ -13,7 +13,11 @@ Appium is optional. Existing WebMessage keys are left as-is; each spec sends tha
 
 ## Status
 
-v1.0.0 skeleton. `Session.launch` is not implemented yet. Later PRs add Playwright, pywinauto, Appium, and the YAML runner.
+Playwright attach is implemented. YAML runner, pywinauto, and Appium come in later PRs. Unit tests do not need a Quick EXE:
+
+```powershell
+python -m pytest tests -m "not live"
+```
 
 ## Install from source
 

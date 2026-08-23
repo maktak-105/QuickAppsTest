@@ -25,7 +25,7 @@ Import check (PR1 success condition):
 python -c "from quickappstest import Session, __version__; print(__version__, Session)"
 ```
 
-`Session.launch(...)` raises `BackendUnavailable` until Playwright/pywinauto backends exist.
+`python -m pytest tests -m "not live"` must pass without an EXE. Live DiskBench: set `QUICKAPPSTEST_REF_EXE` to `dist/binary/QuickDiskBench.exe` with bundled `index.html` beside it.
 
 ## Layout
 

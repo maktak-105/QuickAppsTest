@@ -39,4 +39,4 @@ New Quick apps use `{type: ...}` objects. Existing apps keep `action` / `cmd` / 
 
 ## 5. Implementation status
 
-PR1 provides `Session`, error types, and packaging. `Session.launch` raises `BackendUnavailable` until later PRs.
+PR2 implements Playwright `Session.launch` (CDP, hook, heartbeat cursor, scoped WebView2 cleanup). pywinauto / Appium / YAML runner are later PRs. `Session.launch(..., backends=("playwright",))` against a bundled DiskBench EXE is the live smoke.
