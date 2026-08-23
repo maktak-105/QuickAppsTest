@@ -39,4 +39,4 @@ New Quick apps use `{type: ...}` objects. Existing apps keep `action` / `cmd` / 
 
 ## 5. Implementation status
 
-PR2 implements Playwright attach. PR3 adds pywinauto for the DiskBench Win32 title (`Native Storage Benchmark`), which is longer than the HTML `<title>`. Appium and the YAML runner are later. QuickImageView is out of v1 scope.
+PR2 implements Playwright attach. PR3 adds pywinauto for the DiskBench Win32 title. PR4 adds optional Appium by HWND (skip if port 4723 is closed). YAML runner is later. QuickImageView is out of v1 scope.

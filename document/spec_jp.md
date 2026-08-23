@@ -39,4 +39,4 @@ QuickFolderSize の `requireAdministrator` は残します。そのライブ検�
 
 ## 5. 実装状況
 
-PR2 は Playwright attach。PR3 は DiskBench の Win32 タイトル（`Native Storage Benchmark`。HTML `<title>` より長い）を pywinauto で見る。Appium と YAML ランナーは後続。QuickImageView は v1 対象外。
+PR2 は Playwright attach。PR3 は DiskBench の Win32 タイトルを pywinauto で見る。PR4 は HWND 経由の任意 Appium（4723 が閉じなら SKIP）。YAML ランナーは後続。QuickImageView は v1 対象外。

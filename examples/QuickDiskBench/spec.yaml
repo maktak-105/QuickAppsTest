@@ -4,7 +4,7 @@ app:
   window_class: QuickDiskBenchNativeWebView2Class
   user_data_marker: QuickDiskBench_WVData2
   title_re: "QuickDiskBench"
-  backends: [playwright, pywinauto]
+  backends: [playwright, pywinauto, appium]
   requires_elevation: false
   extra_args: []
   webmessage:
@@ -82,3 +82,9 @@ checks:
     via: pywinauto
     desc: "Win32 タイトル（HTML title より長い Native Storage Benchmark 側）"
     title_re: "Native Storage Benchmark"
+
+  - id: ax.window_name
+    category: structural
+    via: appium
+    desc: "AX Name が QuickDiskBench を含む（contains。完全一致ではない）。サーバ無ければ SKIP。click しない"
+    accessibility_name: "QuickDiskBench"
