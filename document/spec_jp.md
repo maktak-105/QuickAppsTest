@@ -17,7 +17,7 @@
 | アプリ | バックエンド | 備考 |
 | --- | --- | --- |
 | QuickDiskBench | Playwright | バンドル済み `dist/binary/index.html` 必須。`#btn-start` は押さない。ハートビート `{action: get_drives}`。 |
-| QuickImageView | pywinauto | CLI で画像パス。`--ui-test-hidden` は付けない。 |
+| QuickImageView | — | **v1 対象外**（別途開発中）。 |
 
 QuickFolderSize の `requireAdministrator` は残します。そのライブ検査は、すでに管理者の検査プロセスから起動します。既存 WebMessage キーは改名しません。spec が今の payload を送ります。
 

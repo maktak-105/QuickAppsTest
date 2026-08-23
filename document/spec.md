@@ -17,7 +17,7 @@ The library launches a real EXE, attaches Playwright to WebView2 over CDP, uses 
 | App | Backend | Notes |
 | --- | --- | --- |
 | QuickDiskBench | Playwright | Bundled `dist/binary/index.html` required. Do not click `#btn-start`. Heartbeat `{action: get_drives}`. |
-| QuickImageView | pywinauto | CLI image path. Do not pass `--ui-test-hidden`. |
+| QuickImageView | — | **Out of v1 scope** (developed elsewhere). |
 
 QuickFolderSize stays `requireAdministrator`. Live runs of that app require an already elevated test process. Existing WebMessage keys are not renamed; specs send each app's current payload.
 
