@@ -4,9 +4,12 @@
 
 Quick シリーズ向けの共有 UI / 挙動テストライブラリです。出荷用 GUI EXE ではありません。Python パッケージです。
 
-v1 のライブ対象は **QuickDiskBench のみ**です（WebView2 HTML。Playwright の CDP）。
+このリポジトリのライブ spec:
 
-QuickImageView は別途開発中のため、このリポジトリの対象から外します。Appium は任意です。既存アプリの WebMessage キーは改名しません。QuickFolderSize の `requireAdministrator` は製品のまま残します。そのライブ検査は、すでに管理者の検査プロセスから起動します。
+- QuickDiskBench（昇格不要）
+- QuickFolderSize（`requireAdministrator` は残す。検査プロセスを管理者で起動）
+
+QuickImageView は別途開発中のため対象外です。Appium は任意です。既存キーは改名しません。
 
 ## 状態
 
@@ -37,8 +40,9 @@ from quickappstest import Session
 v1 の spec はこのリポジトリだけに置きます。
 
 - `examples/QuickDiskBench/spec.yaml`
+- `examples/QuickFolderSize/spec.yaml`
 
-v1 で `examples/QuickImageView/` は作りません。アプリ repo へもコピーしません。
+`examples/QuickImageView/` は作りません。アプリ repo へもコピーしません。
 
 ## 文書
 
