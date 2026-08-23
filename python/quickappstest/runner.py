@@ -43,9 +43,7 @@ def run_spec(
 
     heartbeat = spec.app.heartbeat.post if spec.app.heartbeat else None
     expect_type = spec.app.heartbeat.expect_type if spec.app.heartbeat else None
-    ready = None
-    if "playwright" in backends:
-        ready = "#btn-lang" if spec.app.name == "QuickDiskBench" else None
+    ready = "#btn-lang" if "playwright" in backends else None
 
     try:
         session = Session.launch(

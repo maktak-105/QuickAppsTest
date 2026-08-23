@@ -22,3 +22,4 @@
 - YAML ランナーと `python -m quickappstest` CLI（`--spec` `--exe` `--report-dir`）
 - `run_tests.py` と GitHub Actions CI（windows-latest で `pytest -m "not live"`）
 - YAML の `eval_js` が `return` で始まる場合に Playwright 向けへ包む。ライブ DiskBench spec は 7 pass、Appium は SKIP
+- QuickFolderSize の example spec（`cmd` ハートビート、`requires_elevation`）。ネイティブダイアログと `C:\` スキャンはしない

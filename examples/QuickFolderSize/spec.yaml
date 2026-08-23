@@ -1,0 +1,101 @@
+version: 1
+app:
+  name: QuickFolderSize
+  window_class: QuickFolderSizeNativeWebView2Class
+  user_data_marker: QuickFolderSize_WVData
+  title_re: "QuickFolderSize"
+  backends: [playwright, pywinauto, appium]
+  requires_elevation: true
+  extra_args: []
+  webmessage:
+    wire: object
+    request_key: cmd
+  heartbeat:
+    via: playwright
+    post: {cmd: get_drives}
+    expect_type: drives
+    timeout_s: 15
+
+# Product UAC stays (MFT). Live runs must already be Administrator.
+# Do not click data-action=open (native folder dialog) or data-action=quit.
+# Do not scan C:\. Scan of a fixture folder is later.
+
+checks:
+  - id: structural.lang_button
+    category: structural
+    via: playwright
+    desc: "#btn-lang が存在する"
+    locator: "#btn-lang"
+    expect: {exists: true}
+
+  - id: structural.scan_button
+    category: structural
+    via: playwright
+    desc: "#btn-scan が存在する（押して C:\\ はスキャンしない）"
+    locator: "#btn-scan"
+    expect: {exists: true, enabled: true}
+
+  - id: structural.addr_input
+    category: structural
+    via: playwright
+    desc: "#addr-input が存在する"
+    locator: "#addr-input"
+    expect: {exists: true}
+
+  - id: structural.about_hidden
+    category: structural
+    via: playwright
+    desc: "初期状態で #about-overlay に hidden がある"
+    expect:
+      class_contains: {selector: "#about-overlay", class: hidden}
+
+  - id: i18n.toggle_scan_label
+    category: i18n
+    via: playwright
+    desc: "言語トグルで btn_scan が スキャン ↔ Scan に入れ替わる"
+    steps:
+      - eval_js: "return document.getElementById('btn-scan').textContent"
+        save_as: before
+      - click: "#btn-lang"
+      - sleep: 1.0
+      - eval_js: "return document.getElementById('btn-scan').textContent"
+        save_as: after
+    expect:
+      - ne: [before, after]
+      - in: [after, ["スキャン", "Scan"]]
+    teardown:
+      - click: "#btn-lang"
+      - sleep: 1.0
+
+  - id: behavioral.about_opens
+    category: behavioral
+    via: playwright
+    desc: "About overlay が hidden を外す（showAbout。ネイティブダイアログは使わない）"
+    steps:
+      - eval_js: "showAbout(); true"
+      - sleep: 0.5
+    expect:
+      class_not_contains: {selector: "#about-overlay", class: hidden}
+    teardown:
+      - click: "#about-close"
+      - sleep: 0.5
+
+  - id: protocol.get_drives
+    category: protocol
+    via: playwright
+    desc: "二発目の get_drives が history に新しい type=drives を足す"
+    steps:
+      - post_message: {cmd: get_drives}
+      - wait_message: {type: drives, since: last, timeout_s: 10}
+
+  - id: native.window_title
+    category: native
+    via: pywinauto
+    desc: "Win32 タイトルに QuickFolderSize が含まれる"
+    title_re: "QuickFolderSize"
+
+  - id: ax.window_name
+    category: structural
+    via: appium
+    desc: "AX Name が QuickFolderSize を含む。サーバ無ければ SKIP"
+    accessibility_name: "QuickFolderSize"

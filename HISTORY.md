@@ -22,3 +22,4 @@ This file records the major changes in each public version.
 - YAML runner and `python -m quickappstest` CLI (`--spec` `--exe` `--report-dir`).
 - `run_tests.py` and GitHub Actions CI (`pytest -m "not live"` on windows-latest).
 - Wrap YAML `eval_js` that starts with `return` so Playwright accepts it. Live DiskBench spec: 7 pass, Appium skip.
+- QuickFolderSize example spec (`cmd` heartbeat, `requires_elevation`). No native dialog, no `C:\` scan.

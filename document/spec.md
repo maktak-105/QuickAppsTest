@@ -16,8 +16,9 @@ The library launches a real EXE, attaches Playwright to WebView2 over CDP, uses 
 
 | App | Backend | Notes |
 | --- | --- | --- |
-| QuickDiskBench | Playwright | Bundled `dist/binary/index.html` required. Do not click `#btn-start`. Heartbeat `{action: get_drives}`. |
-| QuickImageView | — | **Out of v1 scope** (developed elsewhere). |
+| QuickDiskBench | Playwright | Bundled `index.html`. Do not click `#btn-start`. Heartbeat `{action: get_drives}`. |
+| QuickFolderSize | Playwright | Bundled `index.html`. **Elevate the tester.** Heartbeat `{cmd: get_drives}`. Do not open the native folder dialog. |
+| QuickImageView | — | Out of scope (developed elsewhere). |
 
 QuickFolderSize stays `requireAdministrator`. Live runs of that app require an already elevated test process. Existing WebMessage keys are not renamed; specs send each app's current payload.
 
