@@ -10,7 +10,7 @@ from typing import Any, Callable, Mapping, Sequence
 
 from . import cleanup
 from .adapters.webmessage import as_payload, type_equals
-from .backends import playwright_backend, pywinauto_backend
+from .backends import appium_backend, playwright_backend, pywinauto_backend
 from .errors import BackendUnavailable, LaunchError
 from .protocol import wait_for_new
 
@@ -168,7 +168,12 @@ class Session:
                     f"Win32 title {self.pywinauto.window_text()!r} does not match {window_title_re!r}"
                 )
         if "appium" in backends:
-            self.appium = None
+            hwnd = None
+            if self.pywinauto is not None:
+                hwnd = self.pywinauto.handle
+            elif window_class:
+                hwnd = appium_backend.find_hwnd(window_class)
+            self.appium = appium_backend.attach(hwnd=hwnd)
 
     def history_len(self) -> int:
         if self.playwright is None:
@@ -200,6 +205,12 @@ class Session:
         )
 
     def close(self) -> None:
+        if self.appium is not None:
+            try:
+                self.appium.close()
+            except Exception:
+                pass
+            self.appium = None
         if self.playwright is not None:
             try:
                 self.playwright.close()

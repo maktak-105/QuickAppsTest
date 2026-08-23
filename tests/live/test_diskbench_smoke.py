@@ -29,7 +29,7 @@ def test_lang_button_and_second_get_drives() -> None:
     exe = _exe()
     with Session.launch(
         exe,
-        backends=("playwright", "pywinauto"),
+        backends=("playwright", "pywinauto", "appium"),
         user_data_marker="QuickDiskBench_WVData2",
         window_class="QuickDiskBenchNativeWebView2Class",
         window_title_re="Native Storage Benchmark",
@@ -52,3 +52,5 @@ def test_lang_button_and_second_get_drives() -> None:
         assert session.pywinauto.title_matches("Native Storage Benchmark")
         html_title = session.playwright.page.title()
         assert "Native Storage Benchmark" not in html_title
+        if session.appium is not None:
+            assert session.appium.name_contains("QuickDiskBench")

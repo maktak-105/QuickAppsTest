@@ -18,3 +18,4 @@
 - Playwright CDP バックエンド、WebMessage フック（string / object）、history cursor 待ち、user-data 付き WebView2 掃除、QuickDiskBench の example spec。`#btn-start` は押さない
 - v1 ライブ対象は DiskBench のみ。QuickImageView は対象外
 - DiskBench の Win32 タイトル（`Native Storage Benchmark`）を pywinauto で確認。HTML `<title>` とは別文字列
+- Appium は任意。4723 が閉じているときは SKIP。Playwright / pywinauto は通る
