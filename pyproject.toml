@@ -20,6 +20,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 
+[project.scripts]
+quickappstest = "quickappstest.cli:main"
+
 [project.urls]
 Homepage = "https://github.com/maktak-105/QuickAppsTest"
 

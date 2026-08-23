@@ -24,3 +24,4 @@ CODEX_PROJECT_NOTE.txt
 # Local WebView2 / test artifacts
 *.WebView2/
 reports/
+qa_reports/

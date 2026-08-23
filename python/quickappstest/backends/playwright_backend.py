@@ -72,6 +72,26 @@ class PlaywrightBackend:
     def locator_count(self, selector: str) -> int:
         return self.page.locator(selector).count()
 
+    def locator_enabled(self, selector: str) -> bool:
+        loc = self.page.locator(selector)
+        if loc.count() < 1:
+            return False
+        return bool(loc.first.is_enabled())
+
+    def class_has(self, selector: str, class_name: str) -> bool:
+        return bool(
+            self.page.evaluate(
+                """([sel, cls]) => {
+                    const el = document.querySelector(sel);
+                    return !!(el && el.classList.contains(cls));
+                }""",
+                [selector, class_name],
+            )
+        )
+
+    def eval_js(self, script: str) -> Any:
+        return self.page.evaluate(script)
+
     def close(self) -> None:
         try:
             self.browser.close()
