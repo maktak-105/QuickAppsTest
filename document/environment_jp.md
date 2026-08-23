@@ -4,12 +4,13 @@
 
 ## 前提
 
-- Windows 10 / 11 64-bit
+- ライブ GUI 検査は Windows 10 / 11 64-bit
 - Python 3.11 以降
 - Git
-- 後続のライブ PR: WebView2 Runtime（Playwright CDP）。任意で Node.js + Appium 2
+- ライブ DiskBench には WebView2 Runtime（Playwright `connect_over_cdp`）
+- 任意: Node.js LTS + Appium 2（`appium driver install windows`）
 
-ライブ WebView2 検査に `playwright install` は不要です（`connect_over_cdp` は Runtime に繋ぎます）。後続 PR の fake HTML 単体テストだけ任意です。
+ライブ WebView2 に `playwright install` は **不要** です。CDP はインストール済み Runtime に繋ぎます。DiskBench 用に Chromium を入れないでください。
 
 ## 導入
 
@@ -17,15 +18,39 @@
 cd f:\project\QuickAppsTest
 python -m venv .venv
 .\.venv\Scripts\pip install -e .[dev]
+python run_tests.py
 ```
 
-import 確認（PR1 の成功条件）:
+`python run_tests.py` は `pytest tests -m "not live"` です。Quick EXE なしで通る必要があります。
+
+## ライブ DiskBench
+
+先にアプリ側で `python build_native.py` します。検査に必要なのは両方です。
+
+- `dist/binary/QuickDiskBench.exe`
+- 同じフォルダのバンドル済み `dist/binary/index.html`
+
+`templates/index.html` はライブ対象ではありません（`NavigateToString` では相対 `app.js` が解決しません）。
 
 ```powershell
-python -c "from quickappstest import Session, __version__; print(__version__, Session)"
+python -m quickappstest --spec examples/QuickDiskBench/spec.yaml --exe F:\project\QuickDiskBench\dist\binary\QuickDiskBench.exe --report-dir qa_reports
 ```
 
-`python -m pytest tests -m "not live"` は EXE なしで通る必要があります。ライブ DiskBench は `QUICKAPPSTEST_REF_EXE` を、隣にバンドル済み `index.html` がある `dist/binary/QuickDiskBench.exe` にします。
+起動は `subprocess.Popen([exe, *args], cwd=None)` です。パスに引用符を足しません。環境変数は必ず `QUICKAPPSTEST=1`。Playwright 対象は `WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--remote-debugging-port=N --remote-allow-origins=*` も付けます。
+
+`#btn-start` は押しません。`action` 値に `start` 部分文字列を含む post もしません。
+
+`pytest tests/live -m live` には `QUICKAPPSTEST_REF_EXE` を設定します。
+
+## Appium（任意）
+
+オペレータが立てるのは **Appium 2 だけ**（`http://127.0.0.1:4723`、`/wd/hub` なし）。windows driver が WinAppDriver を子として `systemPort` **4724** で起動します。WinAppDriver を自分で 4723 に Listen させないでください。
+
+クライアントは `Appium-Python-Client>=3.0` の `WindowsOptions`。`app_top_level_window` は HWND の 8 桁大文字 hex（**`0x` なし**）。Developer Mode が必要なことが多いです。4723 が閉じていれば Appium 項目は SKIP。Playwright / pywinauto は通ります。
+
+## 昇格
+
+QuickFolderSize の `requireAdministrator` は残します（MFT）。そのライブ検査は、すでに管理者の検査プロセスから起動します。ライブラリは **Popen 前**に `TokenElevation` / `IsUserAnAdmin` を見ます。EXE へ `ShellExecute runas` しません（PID が変わるため）。DiskBench は昇格不要です。
 
 ## 構成
 
@@ -33,11 +58,15 @@ python -c "from quickappstest import Session, __version__; print(__version__, Se
 
 ## GitHub
 
-空リポジトリを先に作り、`agent/*` から `main` へ PR します。`main` への直接 push はしません。
+`agent/*` から `main` へ PR します。`main` への直接 push はしません。CI は `windows-latest` で `python run_tests.py` だけ（ライブ EXE なし）。
 
 ## トラブルシューティング
 
 | 症状 | 確認 |
 | --- | --- |
-| `pip` が `quickappstest` を見つけない | `pyproject.toml` の `package-dir` と `pip install -e .` |
-| `Session.launch` が `BackendUnavailable` | PR1 では正常 |
+| `pip` が `quickappstest` を見つけない | `package-dir` と `pip install -e .` |
+| LaunchError unbundled HTML | EXE の隣にバンドル済み `index.html` が無い |
+| BridgeTimeout | `QuickDiskBench_WVData2` を握った孤児 WebView2。名前一括 `taskkill /IM msedgewebview2.exe` は禁止 |
+| FolderSize の attach が死んだ PID | 検査プロセスを管理者で再実行。UAC を自動クリックしない |
+| Appium がいつも SKIP | 4723 が閉じていれば正常 |
+| `#btn-start` / `action:start` | 禁止。ホストの `find(L"start")` が誤爆する |

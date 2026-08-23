@@ -19,7 +19,7 @@ python -m quickappstest --spec examples/QuickDiskBench/spec.yaml --exe F:\projec
 単体テストに Quick EXE は不要です。
 
 ```powershell
-python -m pytest tests -m "not live"
+python run_tests.py
 ```
 
 ## ソースからの導入

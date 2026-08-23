@@ -33,9 +33,17 @@ Do not **click** the same control with two tools. Overlapping **read** oracles a
 
 ## 4. App contract (existing apps)
 
-See `quick-app-template/10_検査容易性ルール.md` and `plans/2026-08-23_初期実装_v1.0.md`.
+Canonical rules: `quick-app-template/10_検査容易性ルール.md`. Do not rename existing keys for the tester.
 
-New Quick apps use `{type: ...}` objects. Existing apps keep `action` / `cmd` / `type` / `command` / string `type`.
+| App | wire | Heartbeat send | Response |
+| --- | --- | --- | --- |
+| QuickDiskBench | object | `{action: get_drives}` | `type: drives` |
+| QuickFolderSize | object | `{cmd: get_drives}` | `type: drives` |
+| Quick7Zip | object | `{type: initialize}` | `initialized` |
+| QuickFileCopy | object | `{version:1, command: getState}` | `event: selection` |
+| QuickMarkPDF | **string** | `{type: get_state}` | `document_state` |
+
+Do not copy MarkPDF's string `postMessage` onto object hosts (silent no-op). New apps use `{type: ...}` objects. FolderSize UAC stays; elevate the test runner. Native file dialogs are not completed by the tester.
 
 ## 5. Implementation status
 
