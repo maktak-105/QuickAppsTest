@@ -25,13 +25,25 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _print(text: str) -> None:
+    stream = sys.stdout
+    try:
+        stream.write(text + "\n")
+    except UnicodeEncodeError:
+        encoding = stream.encoding or "utf-8"
+        stream.buffer.write((text + "\n").encode(encoding, errors="replace"))
+        stream.buffer.flush()
+        return
+    stream.flush()
+
+
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     report_dir = Path(args.report_dir)
     try:
         spec = load_spec(args.spec)
     except SpecError as exc:
-        print(f"spec error: {exc}", file=sys.stderr)
+        sys.stderr.write(f"spec error: {exc}\n")
         return 2
     code, results = run_spec(
         spec,
@@ -53,9 +65,9 @@ def main(argv: list[str] | None = None) -> int:
         ],
     }
     write_reports(report_dir, payload)
-    print(payload["summary"])
+    _print(payload["summary"])
     for row in payload["checks"]:
-        print(f"  [{row['status']}] {row['id']} ({row['via']}) {row['detail']}")
+        _print(f"  [{row['status']}] {row['id']} ({row['via']}) {row['detail']}")
     return code
 
 
