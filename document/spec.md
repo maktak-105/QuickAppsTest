@@ -39,4 +39,4 @@ New Quick apps use `{type: ...}` objects. Existing apps keep `action` / `cmd` / 
 
 ## 5. Implementation status
 
-PR2 implements Playwright `Session.launch` (CDP, hook, heartbeat cursor, scoped WebView2 cleanup). pywinauto / Appium / YAML runner are later PRs. `Session.launch(..., backends=("playwright",))` against a bundled DiskBench EXE is the live smoke.
+PR2 implements Playwright attach. PR3 adds pywinauto for the DiskBench Win32 title (`Native Storage Benchmark`), which is longer than the HTML `<title>`. Appium and the YAML runner are later. QuickImageView is out of v1 scope.
