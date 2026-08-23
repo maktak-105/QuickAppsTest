@@ -25,7 +25,7 @@ import 確認（PR1 の成功条件）:
 python -c "from quickappstest import Session, __version__; print(__version__, Session)"
 ```
 
-`Session.launch(...)` は Playwright / pywinauto バックエンドが入るまで `BackendUnavailable` です。
+`python -m pytest tests -m "not live"` は EXE なしで通る必要があります。ライブ DiskBench は `QUICKAPPSTEST_REF_EXE` を、隣にバンドル済み `index.html` がある `dist/binary/QuickDiskBench.exe` にします。
 
 ## 構成
 

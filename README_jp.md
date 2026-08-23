@@ -13,7 +13,11 @@ Appium は任意です。既存アプリの WebMessage キーは改名しませ�
 
 ## 状態
 
-v1.0.0 の skeleton です。`Session.launch` は未実装です。Playwright / pywinauto / Appium / YAML ランナーは後続 PR です。
+Playwright の attach は入りました。YAML ランナー、pywinauto、Appium は後続 PR です。単体テストに Quick EXE は不要です。
+
+```powershell
+python -m pytest tests -m "not live"
+```
 
 ## ソースからの導入
 

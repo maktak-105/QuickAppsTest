@@ -28,3 +28,7 @@ package-dir = {"" = "python"}
 
 [tool.setuptools.packages.find]
 where = ["python"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["live: requires a built Quick EXE"]

@@ -1,0 +1,78 @@
+version: 1
+app:
+  name: QuickDiskBench
+  window_class: QuickDiskBenchNativeWebView2Class
+  user_data_marker: QuickDiskBench_WVData2
+  title_re: "QuickDiskBench"
+  backends: [playwright]
+  requires_elevation: false
+  extra_args: []
+  webmessage:
+    wire: object
+    request_key: action
+  heartbeat:
+    via: playwright
+    post: {action: get_drives}
+    expect_type: drives
+    timeout_s: 15
+
+checks:
+  - id: structural.lang_button
+    category: structural
+    via: playwright
+    desc: "#btn-lang が存在する"
+    locator: "#btn-lang"
+    expect: {exists: true}
+
+  - id: structural.start_button
+    category: structural
+    via: playwright
+    desc: "#btn-start が存在し有効（押さない）"
+    locator: "#btn-start"
+    expect: {exists: true, enabled: true}
+
+  - id: structural.help_modal_inactive
+    category: structural
+    via: playwright
+    desc: "初期状態で #help-modal に active が無い"
+    expect:
+      class_not_contains: {selector: "#help-modal", class: active}
+
+  - id: i18n.toggle_start_label
+    category: i18n
+    via: playwright
+    desc: "言語トグルで btn_start が テスト開始 ↔ Start Test に入れ替わる"
+    steps:
+      - eval_js: "return document.querySelector('#btn-start [data-i18n=btn_start]').textContent"
+        save_as: before
+      - click: "#btn-lang"
+      - sleep: 1.0
+      - eval_js: "return document.querySelector('#btn-start [data-i18n=btn_start]').textContent"
+        save_as: after
+    expect:
+      - ne: [before, after]
+      - in: [after, ["テスト開始", "Start Test"]]
+    teardown:
+      - click: "#btn-lang"
+      - sleep: 1.0
+
+  - id: behavioral.help_opens
+    category: behavioral
+    via: playwright
+    desc: "#btn-help でヘルプモーダルが active になる"
+    steps:
+      - click: "#btn-help"
+      - sleep: 1.0
+    expect:
+      class_contains: {selector: "#help-modal", class: active}
+    teardown:
+      - click: "#btn-modal-close"
+      - sleep: 1.0
+
+  - id: protocol.get_drives
+    category: protocol
+    via: playwright
+    desc: "二発目の get_drives が history に新しい type=drives を足す（起動時の一発目では pass しない）"
+    steps:
+      - post_message: {action: get_drives}
+      - wait_message: {type: drives, since: last, timeout_s: 10}
